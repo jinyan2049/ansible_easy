@@ -49,8 +49,6 @@ ln -s /usr/local/sbin/python-3.9/bin/pip3 /usr/bin/pip
 
 pip install --upgrade pip -i https://pypi.tuna.tsinghua.edu.cn/simple
 
-ln  -s  /usr/local/sbin/python-3.9/bin/pyinstaller /usr/bin/
-
 
 # 依赖的第三方模块库 #
 shell> pip install multiprocessing
