@@ -46,7 +46,6 @@ sed -i '1s#usr/bin/python#usr/bin/python2.7#' /usr/libexec/urlgrabber-ext-down
 
 rm -rf /usr/bin/pip
 ln -s /usr/local/sbin/python-3.9/bin/pip3 /usr/bin/pip
-#pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
 
 pip install --upgrade pip -i https://pypi.tuna.tsinghua.edu.cn/simple
 
