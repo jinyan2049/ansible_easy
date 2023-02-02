@@ -5,7 +5,6 @@ ansible简易版，是我日常工作中经常使用到的批量执行命令和�
 
 # 安装python #
 
-#!/bin/bash
 yum -y install epel-release
 
 yum -y install wget zlib-devel bzip2-devel openssl-devel openssl-static ncurses-devel sqlite-devel readline-devel tk-devel gdbm-devel db4-devel libpcap-devel xz-devel libffi-devel lzma gcc
