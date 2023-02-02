@@ -1,34 +1,27 @@
-# ansible_easy
+# ansible_easy #
 very easy to use ansible
 ansible-easy
 ansible简易版，是我日常工作中经常使用到的批量执行命令和上传文件，参考了ansible工作模式，根据自己的情况定制了一个ansible-easy
 
-安装python
-##############
+# 安装python #
+
 #!/bin/bash
 yum -y install epel-release
-sleep 1
+
 yum -y install wget zlib-devel bzip2-devel openssl-devel openssl-static ncurses-devel sqlite-devel readline-devel tk-devel gdbm-devel db4-devel libpcap-devel xz-devel libffi-devel lzma gcc
 
-sleep 1
+
 
 yum -y groupinstall "Development tools"
 
 cd /usr/local/src/ && wget -c https://mirrors.huaweicloud.com/python/3.9.13/Python-3.9.13.tgz
 
-if [ $? -eq 0 ];then
+
 tar xvf Python-3.9.13.tgz
-else
-exit 1
-fi
+
 
 mv Python-3.9.13 /usr/local/python-3.9 && cd /usr/local/python-3.9/
 
-# --enable-shared 
-# 启用共享，方便其他依赖python的一些内置库（比如 mysqlclient) 的资源的正常安装； 不启用可能报以下错误：command 'gcc' failed with exit status 1
-
-# --enable-optimizations
-# --enable-optimizations 是优化选项(LTO，PGO 等)加上这个 flag 编译后，性能有 10% 左右的优化
 
 ./configure --prefix=/usr/local/sbin/python-3.9\
 --enable-shared \
@@ -37,16 +30,17 @@ mv Python-3.9.13 /usr/local/python-3.9 && cd /usr/local/python-3.9/
 make && make install
 
 echo "/usr/local/sbin/python-3.9/lib/" >> /etc/ld.so.conf
+
 ldconfig
 
-if [ $? -eq 0 ];then
+
 rm -rf /usr/bin/python
+
 ln -sv /usr/local/sbin/python-3.9/bin/python3 /usr/bin/python
-else
-exit 1
-fi
+
 
 sed -i '1s#usr/bin/python#usr/bin/python2.7#' /usr/bin/yum
+
 sed -i '1s#usr/bin/python#usr/bin/python2.7#' /usr/libexec/urlgrabber-ext-down
 
 
@@ -57,9 +51,9 @@ ln -s /usr/local/sbin/python-3.9/bin/pip3 /usr/bin/pip
 pip install --upgrade pip -i https://pypi.tuna.tsinghua.edu.cn/simple
 
 ln  -s  /usr/local/sbin/python-3.9/bin/pyinstaller /usr/bin/
-####################
 
-依赖的第三方模块库
+
+# 依赖的第三方模块库 #
 shell> pip install multiprocessing
 
 shell> pip install paramiko
@@ -70,7 +64,7 @@ shell> pip install tqdm
 
 使用介绍：
 
-python ansible-easy.py --help
+# python ansible-easy.py --help #
 usage: ansible-easy.py [-h] [-c] [-p ] inventory
 
 ansible-easy简易版（默认按照CPU核数并发执行）
@@ -87,7 +81,7 @@ optional arguments:
 
 -p , --mput sftp上传目录文件 [本地路径] [远程路径]
 
-1）host.txt文件格式如下：
+# 1）host.txt文件格式如下： #
 ip:ssh端口,用户名,密码（端口不能省，必须加上）
 
 shell> cat host.txt
@@ -98,13 +92,15 @@ shell> cat host.txt
 
 192.168.137.131-150:22,jerry,123456
 
-2）支持上传文件和目录
+# 2）支持上传文件和目录 #
 shell> python ansible-easy.py host.txt -p '/root/soft' '/tmp/soft/'
 
 将本地/root/soft文件夹上传至远程主机/tmp/soft/目录下
 
-3) 执行远程主机Linux命令
+# 3) 执行远程主机Linux命令 #
 shell> python ansible-easy.py host.txt -c 'df -hT;date'
 
 批量创建用户修改密码
-shell> ./ansible-easy host.txt -c 'useradd jerry;echo "123456" | passwd --stdin hechunyang;echo "jerry ALL=(ALL)NOPASSWD: ALL" >> /etc/sudoers'
+shell> ./ansible-easy host.txt -c 'useradd jerry;echo "123456" | passwd --stdin jerry
+
+shell> echo "jerry ALL=(ALL)NOPASSWD: ALL" >> /etc/sudoers'
