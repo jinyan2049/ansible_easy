@@ -22,9 +22,7 @@ tar xvf Python-3.9.13.tgz
 mv Python-3.9.13 /usr/local/python-3.9 && cd /usr/local/python-3.9/
 
 
-./configure --prefix=/usr/local/sbin/python-3.9\
---enable-shared \
---enable-optimizations
+./configure --prefix=/usr/local/sbin/python-3.9 --enable-shared --enable-optimizations
 
 make && make install
 
